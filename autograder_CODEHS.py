@@ -118,7 +118,7 @@ class Suite(PythonTestSuite):
         
         # skip rest of function if there is no name parameter in the return statement
         if idx_name_param == -1:
-            return reval
+            return retval
         
         # verify name param is not surrounded by single or double quotes
         expectation = 'name parameter in return statement is NOT surrounded by quotes (single or double)'
