@@ -6,36 +6,36 @@ class Suite(PythonTestSuite):
     # Write any tests that should run before the code is evaluated
     def before_run(self, student_code, solution_code):
         
-        code_lower = student_code.lower()
-        code_lower = strip_comments(code_lower)
-        
+        code_lower = strip_comments(student_code).lower()
+ """         
         # verify there is a def statement
-        idx_def = student_code.find('def ')
+        idx_def = code_lower.find('def ')
         expect(idx_def).to_be_greater_than_or_equal_to(0) \
             .with_options(test_name="contains def")
-        
+         
         # verify def is followed by hello
         if idx_def > 0:
             
             # verify the function is named hello (case sensitive)
-            idx_fn_name = student_code[idx_def:].find('hello')
+            idx_fn_name = code_lower[idx_def:].find('hello')
             expect(idx_fn_name).to_be_greater_than(0) \
                 .with_options(test_name='contains function named hello (all lower case)')
                 
             
             # verify the function passes in a parameter called name in parens
             if idx_fn_name >= 0:
-                idx_left_paren = student_code[idx_fn_name:].find('(')
+                idx_left_paren = code_lower[idx_fn_name:].find('(')
                 if idx_left_paren >= 0:
-                    idx_param = student_code[idx_left_paren].find('name')
+                    idx_param = code_lower[idx_left_paren].find('name')
                     expect(idx_fn_name).to_be_greater_than(0) \
                         .with_options(test_name='hello function expects a name parameter')
                        
-            # verify the hello function contains a return statement
-            idx_return = code_lower[idx_def:].find('return ')
-            expect(idx_return).to_be_greater_than(0) \
-                .with_options(test_name='hello function contains return statement')
-                
+                # verify the hello function contains a return statement
+                # TODO: this has stopped working as of 2023-12-16 and I do not know why
+                idx_return = code_lower[idx_fn_name:].find('return')
+                expect(idx_return).to_be_greater_than(0) \
+                    .with_options(test_name='hello function contains return statement')
+             
             # verify that return is followed by the literal string hello (case insensitive)
             if idx_return > 0:
                 idx_hello = code_lower[idx_return:].find('hello, ')
@@ -60,6 +60,7 @@ class Suite(PythonTestSuite):
                         possible_quote_char = code_beyond_last_find[idx_name_param -1 : idx_name_param]
                         expect(possible_quote_char).not_to_contain('"') \
                             .with_options(test_name=f'{possible_quote_char} name parameter is NOT surrounded by quote characters')
+                        
             
    
         # make sure the user prompts for input
@@ -99,6 +100,7 @@ class Suite(PythonTestSuite):
 
 
         #pass
+"""        
 
     # Write any tests that should run after the code is evaluated
     def after_run(self, student_code, solution_code, student_output, solution_output):

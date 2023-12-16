@@ -1,0 +1,9 @@
+# update the return statement
+def hello(name):
+    return "Hello, " + name
+
+# prompt for the name
+your_name = input("What is your first name?")
+
+# print using a call to the hello function, passing in the name
+print(hello(your_name))
