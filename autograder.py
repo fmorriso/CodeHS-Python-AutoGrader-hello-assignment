@@ -127,9 +127,7 @@ class AutoGrader:
 
         # check expectations about the return statement within the function
         if self.expect_return_statement():
-            if self.expect_return_expression():
-                pass
-
+            self.expect_return_expression()
 
     def print_results(self):
         for result in self.results:
