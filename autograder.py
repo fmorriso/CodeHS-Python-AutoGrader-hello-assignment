@@ -77,6 +77,48 @@ class AutoGrader:
         self.results.append(f'SUCCESS: {expectation}')
         return True
 
+    def expect_return_expression(self) -> bool:
+        expectation = 'hello function returns hello with comma in quotes'
+        looking_for = 'hello, '
+        # verify that return is followed by the literal string hello (case insensitive)
+        idx_hello = self.code_lower[self.code_index:].find(looking_for)
+        if idx_hello == -1:
+            self.results.append(f'FAIL: {expectation}')
+            return False
+        self.results.append(f'SUCCESS: {expectation}')
+        self.code_index += idx_hello + len(looking_for)
+
+        # look for the plus concatenation operator
+        looking_for = ' + '
+        expectation = 'hello function return statement contains + operator'
+        idx_plus_sign = self.code_lower[self.code_index:].find('+')
+        if idx_plus_sign == -1:
+            self.results.append(f'FAIL: {expectation}')
+            return False
+        self.results.append(f'SUCCESS: {expectation}')
+        self.code_index += idx_plus_sign + len(looking_for)
+
+        # look for name parameter without any quotes around it
+        looking_for = 'name'
+        expectation = 'hello function return statement includes name parameter'
+        idx_name_param = self.code_lower[self.code_index:].find(looking_for)
+        if idx_name_param == -1:
+            self.results.append(f'FAIL: {expectation}')
+            return False
+        self.results.append(f'SUCCESS: {expectation}')
+        # do NOT advance code_index just yet
+
+        # verify name param is not surrounded by single or double quotes
+        expectation = 'name parameter in return statement is NOT surrounded by quotes (single or double)'
+        possible_quote_char = self.code_lower[self.code_index - 1]
+        if possible_quote_char == '"' or possible_quote_char == "'":
+            self.results.append(f'FAIL: {expectation}')
+            return False
+        self.results.append(f'SUCCESS: {expectation}')
+        # note: need to advance beyond " + name"
+        self.code_index += idx_plus_sign + len(looking_for)
+        return True
+
     def grade_student_code(self):
         # expectations concerning the def statement
         if self.expect_def():
@@ -85,7 +127,8 @@ class AutoGrader:
 
         # expectations about the return statement within the function
         if self.expect_return_statement():
-            pass
+            if self.expect_return_expression():
+                pass
 
 
     def print_results(self):
