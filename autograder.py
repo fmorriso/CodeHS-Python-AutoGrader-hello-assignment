@@ -73,7 +73,7 @@ class AutoGrader:
             if self.expect_function_name():
                 self.expect_function_parameter()
 
-        # expectations about the return statement within the function
+    # expectations about the return statement within the function
 
 
     def print_results(self):
