@@ -125,7 +125,7 @@ class AutoGrader:
             if self.expect_function_name():
                 self.expect_function_parameter()
 
-        # expectations about the return statement within the function
+        # check expectations about the return statement within the function
         if self.expect_return_statement():
             if self.expect_return_expression():
                 pass
