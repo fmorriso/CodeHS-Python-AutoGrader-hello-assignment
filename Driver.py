@@ -13,6 +13,3 @@ if __name__ == '__main__':
     ag.get_student_code_from_file()
     ag.grade_student_code()
     ag.print_results()
-
-
-
