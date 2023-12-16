@@ -29,10 +29,10 @@ class AutoGrader:
         if idx_def == -1:
             self.results.append(f'FAIL: {expectation}')
             return False
-        else:
-            self.results.append(f'SUCCESS: {expectation}')
-            self.code_index = len(looking_for)
-            return True
+
+        self.results.append(f'SUCCESS: {expectation}')
+        self.code_index = len(looking_for)
+        return True
 
     def expect_function_name(self) -> bool:
         expectation = 'contains function named hello (all lowercase)'
@@ -42,10 +42,9 @@ class AutoGrader:
         if idx_fn_name == -1:
             self.results.append(f'FAIL: {expectation}')
             return False
-        else:
-            self.results.append(f'SUCCESS: {expectation}')
-            self.code_index += idx_fn_name + len(looking_for)
-            return True
+        self.results.append(f'SUCCESS: {expectation}')
+        self.code_index += idx_fn_name + len(looking_for)
+        return True
 
     def expect_function_parameter(self) -> bool:
         expectation = 'hello function expects a name parameter'
@@ -67,13 +66,26 @@ class AutoGrader:
         self.code_index += idx_param + len(looking_for)
         return True
 
+    def expect_return_statement(self) -> bool:
+        expectation = 'hello function contains a return statement'
+        looking_for = 'return '
+        idx_return = self.code_lower[self.code_index:].find(looking_for)
+        if idx_return == -1:
+            self.results.append(f'FAIL: {expectation}')
+            return False
+        self.code_index += idx_return + len(looking_for)
+        self.results.append(f'SUCCESS: {expectation}')
+        return True
+
     def grade_student_code(self):
         # expectations concerning the def statement
         if self.expect_def():
             if self.expect_function_name():
                 self.expect_function_parameter()
 
-    # expectations about the return statement within the function
+        # expectations about the return statement within the function
+        if self.expect_return_statement():
+            pass
 
 
     def print_results(self):
