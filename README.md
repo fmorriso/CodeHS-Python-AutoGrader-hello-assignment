@@ -2,7 +2,7 @@
  CodeHS Python AutoGrader - hello assignment
  ## Useful links
  * [CodeHS Autograders](https://help.codehs.com/en/articles/3335521-codehs-autograders)
- * [Creating Autograder to CHeck Student Code](https://help.codehs.com/en/articles/2119075-creating-autograders-to-check-student-code)
+ * [Creating Autograders to CHeck Student Code](https://help.codehs.com/en/articles/2119075-creating-autograders-to-check-student-code)
 ## History
 * Date Written: 2023-12-16
 ## Tools Used
